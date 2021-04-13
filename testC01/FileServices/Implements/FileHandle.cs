@@ -93,7 +93,6 @@ namespace testC01.FileServices.Implements
                 try
                 {
                     File.AppendAllText(filePath, line + Environment.NewLine);
-                    Console.WriteLine(line);
                 }
                 catch (ArgumentNullException ane)
                 {

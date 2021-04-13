@@ -30,7 +30,7 @@ namespace testC01.FileServices.Implements
             string[] filter = _config.GetSection("Filter").Get<string[]>();
             var allLines = _fileHandle.GetAllLineOfFIleInputFoder(_config["Folder"], filter);
             allLines = _utilHandle.Sort(allLines);
-            _fileHandle.WriteToNewFile(_config["FileOutput"] ,allLines);       
+            _fileHandle.WriteToNewFile(_config["FolderOutput"]+"\\"+_config["FileOutput"] ,allLines);       
             stopTime = DateTime.Now;
             _logger.LogInformation("End = " + stopTime.ToString());
             double totalMilisecond = stopTime.Subtract(startTime).TotalMilliseconds;
