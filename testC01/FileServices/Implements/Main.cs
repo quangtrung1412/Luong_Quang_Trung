@@ -1,5 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using NLog;
+using NLog.Fluent;
+using NLog.Targets;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +29,14 @@ namespace testC01.FileServices.Implements
         public void Run()
         {
             startTime = DateTime.Now;
+            //rename filename Nlog
+            var target = (FileTarget)LogManager.Configuration.FindTargetByName("logFile");
+            target.FileName = _config["FolderOutput"] + "\\" + _config["FileLog"];
+            LogManager.ReconfigExistingLoggers();
+            //rename filename Nlog logerror
+            var targetError = (FileTarget)LogManager.Configuration.FindTargetByName("logFileError");
+            targetError.FileName = _config["FolderOutput"] + "\\" + "Error-${shortdate}.txt";
+            LogManager.ReconfigExistingLoggers();
             _logger.LogInformation("Begin = " + startTime.ToString());
             string[] filter = _config.GetSection("Filter").Get<string[]>();
             var allLines = _fileHandle.GetAllLineOfFIleInputFoder(_config["Folder"], filter);
